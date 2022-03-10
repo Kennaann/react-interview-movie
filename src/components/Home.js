@@ -33,6 +33,7 @@ function Home() {
                     return action.payload.categories.indexOf(movie.category) !== -1
                 })
                 setCurrentPage(1)
+                return movies
             default:
                 return movies
         }
@@ -55,6 +56,17 @@ function Home() {
 
     }
 
+
+    // Récupère les catégorie
+    function getCategories() {
+        allMovies && allMovies.map((m) => {
+            // vérifie si la catégorie à push est déja dans le tableau
+            categories.indexOf(m.category) === -1 && categories.push(m.category)
+        })
+        return categories
+    }
+
+
     useEffect(() => {
         getMovies()
     }, [])
@@ -63,6 +75,7 @@ function Home() {
     // Rcupère les films par catégories
     function getMoviesByCategories() {
         let categories = multiselectRef.current.getSelectedItems()
+        multiselectRef.current.resetSelectedValues();
 
         if (categories.length > 0) {
             dispatch({ type: ACTIONS.GET_MOVIES_BY_CATEG, payload: { categories: categories } })
@@ -71,27 +84,17 @@ function Home() {
         }
     }
 
-    // Li'utilisateur choisit le nombre de filmmsm par pages 
+    // Li'utilisateur choisit le nombre de films par pages 
     function updateMoviesPerPages(e) {
         setCurrentPage(1)
         return setMoviesPerPage(e)
     }
 
 
-    // Récupère les catégorie
-    allMovies && allMovies.map((m) => {
-
-        // vérifie si la catégorie à push est déja dans le tableau
-        if (categories.indexOf(m.category) === -1) {
-            categories.push(m.category)
-        }
-        return multiselectRef.current.resetSelectedValues();
-    })
-
     // Récupère les films de la page active
     const indexOfLastMovie = currentPage * moviesPerPage
     const indexOfFirstMovie = indexOfLastMovie - moviesPerPage
-    const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie)
+    const paginationMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie)
 
     // Pagination 
     function paginate(pageNumber) {
@@ -112,14 +115,14 @@ function Home() {
             <MultiselectComponents
                 getMoviesByCategories={getMoviesByCategories}
                 updateMoviesPerPages={updateMoviesPerPages}
-                categories={categories}
+                categories={getCategories()}
                 multiselectRef={multiselectRef}
             />
 
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 md:gap-6 place-content-start">
                 {
-                    movies &&
-                    movies.map((m) =>
+                    allMovies &&
+                    allMovies.map((m) =>
                         <MovieCard
                             key={m.id}
                             id={m.id}
@@ -129,7 +132,7 @@ function Home() {
                             dislikes={m.dislikes}
                             image={m.image}
                             dispatch={dispatch}
-                            hidden={currentMovies.indexOf(m) !== -1 ? false : true}
+                            hidden={paginationMovies.indexOf(m) !== -1 && movies.indexOf(m) !== -1 ? false : true}
                         />
 
                     )
