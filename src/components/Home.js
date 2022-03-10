@@ -85,7 +85,7 @@ function Home() {
         if (categories.indexOf(m.category) === -1) {
             categories.push(m.category)
         }
-        multiselectRef.current.resetSelectedValues();
+        return multiselectRef.current.resetSelectedValues();
     })
 
     // Récupère les films de la page active

@@ -22,7 +22,7 @@ function Pagination({
     return (
         <nav className='flex items-center w-fit m-auto space-x-4 my-20'>
             {
-                currentPage != 1 ?
+                currentPage !== 1 ?
                     <button className='p-2 rounded-2xl bg-white shadow-md hover:shadow-lg transition-all' onClick={() => paginatePrev()}>
                         <GrFormPrevious />
                     </button>
