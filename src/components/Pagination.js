@@ -36,7 +36,7 @@ function Pagination({
                     <button disabled={true} className='p-2 rounded-2xl bg-slate-200'>
                         <GrFormNext />
                     </button>
-                    : <button className='p-2 rounded-2xl bg-white shadow-md hover:shadow-lgd transition-all' onClick={() => paginateNext()}>
+                    : <button className='p-2 rounded-2xl bg-white shadow-md hover:shadow-lg transition-all' onClick={() => paginateNext()}>
                         <GrFormNext />
                     </button>
             }
