@@ -7,7 +7,6 @@ function Pagination({
     moviesPerPage,
     totalMovies,
     currentPage,
-    paginate,
     paginateNext,
     paginatePrev
 }) {

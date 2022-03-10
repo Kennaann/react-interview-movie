@@ -119,7 +119,7 @@ function Home() {
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 md:gap-6 place-content-start">
                 {
                     movies &&
-                    currentMovies.map((m) =>
+                    movies.map((m) =>
                         <MovieCard
                             key={m.id}
                             id={m.id}
@@ -129,6 +129,7 @@ function Home() {
                             dislikes={m.dislikes}
                             image={m.image}
                             dispatch={dispatch}
+                            hidden={currentMovies.indexOf(m) !== -1 ? false : true}
                         />
 
                     )

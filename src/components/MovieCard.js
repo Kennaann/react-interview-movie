@@ -12,7 +12,8 @@ function MovieCard({
     likes,
     dislikes,
     dispatch,
-    image
+    image,
+    hidden
 }) {
 
 
@@ -80,7 +81,9 @@ function MovieCard({
 
 
     return (
-        <div className='rounded-md drop-shadow-md bg-slate-50 overflow-hidden flex xs:flex-col h-[30vw] xs:h-fit'>
+        <div
+            style={hidden ? { display: 'none' } : { display: 'flex' }}
+            className='rounded-md drop-shadow-md bg-slate-50 overflow-hidden xs:flex-col h-[30vw] xs:h-fit'>
             <img src={image} alt="film poster" className=' h-full xs:h-[30vw] sm:h-[15vw] lg:h-[10vw] w-1/2 xs:w-full object-cover' />
 
             {/* description */}
